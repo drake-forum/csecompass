@@ -9,7 +9,189 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      blog_posts: {
+        Row: {
+          category: string
+          content: string | null
+          created_at: string
+          excerpt: string
+          featured: boolean | null
+          id: string
+          published_at: string | null
+          read_time: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          content?: string | null
+          created_at?: string
+          excerpt: string
+          featured?: boolean | null
+          id?: string
+          published_at?: string | null
+          read_time?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string | null
+          created_at?: string
+          excerpt?: string
+          featured?: boolean | null
+          id?: string
+          published_at?: string | null
+          read_time?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          created_at: string
+          date_end: string | null
+          date_start: string | null
+          description: string
+          featured: boolean | null
+          id: string
+          is_online: boolean | null
+          location: string | null
+          organizer: string | null
+          registration_url: string | null
+          tags: string[] | null
+          title: string
+          type: Database["public"]["Enums"]["event_type"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date_end?: string | null
+          date_start?: string | null
+          description: string
+          featured?: boolean | null
+          id?: string
+          is_online?: boolean | null
+          location?: string | null
+          organizer?: string | null
+          registration_url?: string | null
+          tags?: string[] | null
+          title: string
+          type: Database["public"]["Enums"]["event_type"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date_end?: string | null
+          date_start?: string | null
+          description?: string
+          featured?: boolean | null
+          id?: string
+          is_online?: boolean | null
+          location?: string | null
+          organizer?: string | null
+          registration_url?: string | null
+          tags?: string[] | null
+          title?: string
+          type?: Database["public"]["Enums"]["event_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          difficulty: Database["public"]["Enums"]["difficulty_level"] | null
+          featured: boolean | null
+          id: string
+          resources: string[] | null
+          tags: string[] | null
+          title: string
+          type: Database["public"]["Enums"]["resource_type"]
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          difficulty?: Database["public"]["Enums"]["difficulty_level"] | null
+          featured?: boolean | null
+          id?: string
+          resources?: string[] | null
+          tags?: string[] | null
+          title: string
+          type: Database["public"]["Enums"]["resource_type"]
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          difficulty?: Database["public"]["Enums"]["difficulty_level"] | null
+          featured?: boolean | null
+          id?: string
+          resources?: string[] | null
+          tags?: string[] | null
+          title?: string
+          type?: Database["public"]["Enums"]["resource_type"]
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
+      roadmaps: {
+        Row: {
+          created_at: string
+          description: string
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          download_url: string | null
+          duration: string | null
+          featured: boolean | null
+          id: string
+          roadmap_url: string | null
+          tags: string[] | null
+          technologies: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          download_url?: string | null
+          duration?: string | null
+          featured?: boolean | null
+          id?: string
+          roadmap_url?: string | null
+          tags?: string[] | null
+          technologies?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          difficulty?: Database["public"]["Enums"]["difficulty_level"]
+          download_url?: string | null
+          duration?: string | null
+          featured?: boolean | null
+          id?: string
+          roadmap_url?: string | null
+          tags?: string[] | null
+          technologies?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +200,20 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      difficulty_level: "beginner" | "intermediate" | "advanced" | "expert"
+      event_type:
+        | "hackathon"
+        | "contest"
+        | "workshop"
+        | "webinar"
+        | "conference"
+      resource_type:
+        | "roadmap"
+        | "course"
+        | "tutorial"
+        | "tool"
+        | "cheat_sheet"
+        | "project_idea"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +328,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      difficulty_level: ["beginner", "intermediate", "advanced", "expert"],
+      event_type: ["hackathon", "contest", "workshop", "webinar", "conference"],
+      resource_type: [
+        "roadmap",
+        "course",
+        "tutorial",
+        "tool",
+        "cheat_sheet",
+        "project_idea",
+      ],
+    },
   },
 } as const
