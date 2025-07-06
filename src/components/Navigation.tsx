@@ -24,9 +24,11 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent-purple rounded-lg flex items-center justify-center">
-              <span className="text-sm font-bold text-background">C</span>
-            </div>
+            <img 
+              src="/lovable-uploads/8e1acd5d-6e78-499b-b1aa-150c7554e856.png" 
+              alt="CSE Compass Logo" 
+              className="w-8 h-8"
+            />
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent-purple bg-clip-text text-transparent">
               CSE Compass
             </span>
