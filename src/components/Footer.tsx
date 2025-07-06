@@ -30,70 +30,80 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-card/30 border-t border-border mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <footer className="bg-card/30 border-t border-border mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Brand */}
-          <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent-purple rounded-lg flex items-center justify-center">
-                <span className="text-sm font-bold text-background">C</span>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent-purple bg-clip-text text-transparent">
+          <div className="md:col-span-2">
+            <Link to="/" className="flex items-center space-x-2 mb-3">
+              <img 
+                src="/lovable-uploads/8e1acd5d-6e78-499b-b1aa-150c7554e856.png" 
+                alt="CSE Compass Logo" 
+                className="w-6 h-6"
+              />
+              <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent-purple bg-clip-text text-transparent">
                 CSE Compass
               </span>
             </Link>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Your comprehensive guide to mastering Computer Science & Engineering. Curated resources, clear roadmaps, and an amazing community.
+            <p className="text-muted-foreground text-sm mb-4 max-w-sm">
+              Your comprehensive guide to mastering Computer Science & Engineering.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-10 h-10 bg-background border border-border rounded-lg flex items-center justify-center hover:border-primary/50 transition-colors group"
+                  className="w-8 h-8 bg-background border border-border rounded-md flex items-center justify-center hover:border-primary/50 transition-colors group"
                   title={social.name}
                 >
-                  <span className="text-lg group-hover:scale-110 transition-transform">{social.icon}</span>
+                  <span className="text-sm group-hover:scale-110 transition-transform">{social.icon}</span>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Links */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h3 className="font-semibold text-foreground mb-4">{category}</h3>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-medium text-foreground mb-3 text-sm">Quick Links</h3>
+            <ul className="space-y-2">
+              {footerLinks["Quick Links"].map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.href}
+                    className="text-muted-foreground hover:text-primary transition-colors text-xs"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h3 className="font-medium text-foreground mb-3 text-sm">Company</h3>
+            <ul className="space-y-2">
+              {footerLinks["Company"].map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.href}
+                    className="text-muted-foreground hover:text-primary transition-colors text-xs"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-muted-foreground text-sm">
-            © 2024 CSE Compass. Made with ❤️ for the developer community.
+        <div className="border-t border-border mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between">
+          <p className="text-muted-foreground text-xs">
+            © 2024 CSE Compass. Made with ❤️ for developers.
           </p>
-          <div className="flex items-center space-x-6 mt-4 md:mt-0">
-            <span className="text-sm text-muted-foreground">
-              Open Source
-            </span>
-            <span className="text-sm text-muted-foreground">
-              100% Free
-            </span>
-            <span className="text-sm text-muted-foreground">
-              Community Driven
-            </span>
+          <div className="flex items-center space-x-4 mt-2 sm:mt-0">
+            <span className="text-xs text-muted-foreground">Open Source</span>
+            <span className="text-xs text-muted-foreground">100% Free</span>
           </div>
         </div>
       </div>
