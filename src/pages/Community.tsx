@@ -11,7 +11,8 @@ const communities = [
     platform: "Discord",
     category: "Official",
     featured: true,
-    tags: ["General", "Study Groups", "Career", "Projects"]
+    tags: ["General", "Study Groups", "Career", "Projects"],
+    href: "https://discord.gg/SMZFvwu7MC"
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const communities = [
     platform: "Reddit",
     category: "Career",
     featured: true,
-    tags: ["Career Advice", "Interviews", "Salary", "Industry"]
+    tags: ["Career Advice", "Interviews", "Salary", "Industry"],
+    href: "https://www.reddit.com/r/cscareerquestions/"
   },
   {
     id: 3,
@@ -31,7 +33,8 @@ const communities = [
     platform: "Forum",
     category: "Learning",
     featured: true,
-    tags: ["Web Development", "Certificates", "Projects", "Beginner"]
+    tags: ["Web Development", "Certificates", "Projects", "Beginner"],
+    href: "https://forum.freecodecamp.org/"
   },
   {
     id: 4,
@@ -41,7 +44,8 @@ const communities = [
     platform: "Platform",
     category: "Blogging",
     featured: false,
-    tags: ["Articles", "Tutorials", "Career", "Open Source"]
+    tags: ["Articles", "Tutorials", "Career", "Open Source"],
+    href: "https://dev.to/"
   },
   {
     id: 5,
@@ -51,7 +55,8 @@ const communities = [
     platform: "Q&A",
     category: "Help",
     featured: false,
-    tags: ["Q&A", "Debugging", "Code Help", "Documentation"]
+    tags: ["Q&A", "Debugging", "Code Help", "Documentation"],
+    href: "https://stackoverflow.com/questions"
   },
   {
     id: 6,
@@ -61,7 +66,8 @@ const communities = [
     platform: "GitHub",
     category: "Open Source",
     featured: false,
-    tags: ["Open Source", "Collaboration", "Portfolio", "Projects"]
+    tags: ["Open Source", "Collaboration", "Portfolio", "Projects"],
+    href: "https://github.com/community/community"
   }
 ];
 
@@ -178,8 +184,11 @@ export default function Community() {
                   <Button 
                     className="w-full bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
                     size="sm"
+                    asChild
                   >
-                    Join Community
+                    <a href={community.href} target="_blank" rel="noopener noreferrer">
+                      Join Community
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
@@ -225,8 +234,11 @@ export default function Community() {
                     variant="outline" 
                     className="w-full border-primary/20 hover:border-primary"
                     size="sm"
+                    asChild
                   >
-                    Visit Community
+                    <a href={community.href} target="_blank" rel="noopener noreferrer">
+                      Visit Community
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
