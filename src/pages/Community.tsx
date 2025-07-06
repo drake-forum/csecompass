@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { CommunityGuidelinesDialog } from "@/components/CommunityGuidelinesDialog";
 
 const communities = [
   {
@@ -113,37 +114,16 @@ export default function Community() {
         </div>
 
         {/* Community Guidelines */}
-        <div className="mb-16">
-          <Card className="bg-gradient-card backdrop-blur-sm border-border max-w-4xl mx-auto">
-            <CardHeader>
-              <CardTitle className="text-xl text-center">Community Guidelines</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                <div>
-                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-primary text-xl">🤝</span>
-                  </div>
-                  <h3 className="font-semibold mb-2">Be Respectful</h3>
-                  <p className="text-sm text-muted-foreground">Treat everyone with kindness and respect</p>
-                </div>
-                <div>
-                  <div className="w-12 h-12 bg-accent-green/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-accent-green text-xl">🚀</span>
-                  </div>
-                  <h3 className="font-semibold mb-2">Share Knowledge</h3>
-                  <p className="text-sm text-muted-foreground">Help others learn and grow together</p>
-                </div>
-                <div>
-                  <div className="w-12 h-12 bg-accent-purple/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-accent-purple text-xl">💡</span>
-                  </div>
-                  <h3 className="font-semibold mb-2">Stay Curious</h3>
-                  <p className="text-sm text-muted-foreground">Ask questions and embrace learning</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="mb-16 text-center">
+          <CommunityGuidelinesDialog>
+            <Button 
+              variant="outline" 
+              className="border-primary/20 hover:border-primary hover:bg-primary/10"
+              size="lg"
+            >
+              📋 Read Community Guidelines
+            </Button>
+          </CommunityGuidelinesDialog>
         </div>
 
         {/* Featured Communities */}
@@ -260,9 +240,11 @@ export default function Community() {
                 <Button className="bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80">
                   Submit Community
                 </Button>
-                <Button variant="outline" className="border-primary/20 hover:border-primary">
-                  Community Guidelines
-                </Button>
+                <CommunityGuidelinesDialog>
+                  <Button variant="outline" className="border-primary/20 hover:border-primary">
+                    Community Guidelines
+                  </Button>
+                </CommunityGuidelinesDialog>
               </div>
             </CardContent>
           </Card>
