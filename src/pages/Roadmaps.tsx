@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 const roadmaps = [
   {
@@ -117,12 +118,14 @@ export default function Roadmaps() {
                     <span>Duration: {roadmap.duration}</span>
                   </div>
                   <div className="flex gap-2">
-                    <Button 
-                      className="flex-1 bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
-                      size="sm"
-                    >
-                      View Roadmap
-                    </Button>
+                    <Link to={`/roadmaps/${roadmap.id}`}>
+                      <Button 
+                        className="flex-1 bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
+                        size="sm"
+                      >
+                        View Roadmap
+                      </Button>
+                    </Link>
                     <Button variant="outline" size="sm" className="border-primary/20 hover:border-primary">
                       Download
                     </Button>
@@ -167,12 +170,14 @@ export default function Roadmaps() {
                     <span>Duration: {roadmap.duration}</span>
                   </div>
                   <div className="flex gap-2">
-                    <Button 
-                      className="flex-1 bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
-                      size="sm"
-                    >
-                      View Roadmap
-                    </Button>
+                    <Link to={`/roadmaps/${roadmap.id}`}>
+                      <Button 
+                        className="flex-1 bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
+                        size="sm"
+                      >
+                        View Roadmap
+                      </Button>
+                    </Link>
                     <Button variant="outline" size="sm" className="border-primary/20 hover:border-primary">
                       Download
                     </Button>

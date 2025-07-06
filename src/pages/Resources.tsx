@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -169,12 +170,14 @@ export default function Resources() {
                     ))}
                   </div>
                 </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
-                  size="sm"
-                >
-                  Explore Resources
-                </Button>
+                <Link to={`/resources/${resource.id}`}>
+                  <Button 
+                    className="w-full bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
+                    size="sm"
+                  >
+                    Explore Resources
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

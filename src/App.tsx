@@ -7,7 +7,9 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Index from "./pages/Index";
 import Resources from "./pages/Resources";
+import ResourceDetail from "./pages/ResourceDetail";
 import Roadmaps from "./pages/Roadmaps";
+import RoadmapDetail from "./pages/RoadmapDetail";
 import Blog from "./pages/Blog";
 import Events from "./pages/Events";
 import Community from "./pages/Community";
@@ -28,7 +30,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/:id" element={<ResourceDetail />} />
             <Route path="/roadmaps" element={<Roadmaps />} />
+            <Route path="/roadmaps/:id" element={<RoadmapDetail />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/events" element={<Events />} />
             <Route path="/community" element={<Community />} />
