@@ -22,7 +22,7 @@ export default function ResourceDetail() {
         .from("resources")
         .select("*")
         .eq("id", id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error("Error fetching resource:", error);
