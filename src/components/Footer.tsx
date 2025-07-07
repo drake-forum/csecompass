@@ -99,11 +99,11 @@ export function Footer() {
 
         <div className="border-t border-border mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between">
           <p className="text-muted-foreground text-xs">
-            © 2024 CSE Compass. Made with ❤️ for developers.
+            © 2024 CSE Compass. Made with Absolute Hate for developers.
           </p>
           <div className="flex items-center space-x-4 mt-2 sm:mt-0">
-            <span className="text-xs text-muted-foreground">Open Source</span>
-            <span className="text-xs text-muted-foreground">100% Free</span>
+            <span className="text-xs text-muted-foreground">Open Source (not)</span>
+            <span className="text-xs text-muted-foreground">90% Free</span>
           </div>
         </div>
       </div>
