@@ -22,7 +22,7 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { name: "Discord", icon: "💬", href: "#" },
+  { name: "Discord", icon: "💬", href: "https://discord.gg/SMZFvwu7MC" },
   { name: "Twitter", icon: "🐦", href: "#" },
   { name: "GitHub", icon: "🐱", href: "#" },
   { name: "LinkedIn", icon: "💼", href: "#" }
