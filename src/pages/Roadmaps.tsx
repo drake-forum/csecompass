@@ -1,72 +1,51 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Tables } from "@/integrations/supabase/types";
 
-const roadmaps = [
-  {
-    id: 1,
-    title: "Frontend Developer Roadmap 2024",
-    description: "Complete path from beginner to advanced frontend developer",
-    technologies: ["HTML", "CSS", "JavaScript", "React", "TypeScript"],
-    difficulty: "Beginner to Advanced",
-    duration: "6-12 months",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Backend Developer Roadmap",
-    description: "Master server-side development with modern technologies",
-    technologies: ["Node.js", "Express", "Database", "APIs", "Deployment"],
-    difficulty: "Intermediate",
-    duration: "8-14 months",
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Data Structures & Algorithms",
-    description: "Comprehensive DSA roadmap for competitive programming and interviews",
-    technologies: ["Arrays", "Trees", "Graphs", "DP", "Greedy"],
-    difficulty: "Beginner to Expert",
-    duration: "4-8 months",
-    featured: false
-  },
-  {
-    id: 4,
-    title: "DevOps Engineer Roadmap",
-    description: "Learn CI/CD, containerization, and cloud infrastructure",
-    technologies: ["Docker", "Kubernetes", "AWS", "Jenkins", "Terraform"],
-    difficulty: "Intermediate to Advanced",
-    duration: "6-10 months",
-    featured: false
-  },
-  {
-    id: 5,
-    title: "Machine Learning Engineer",
-    description: "From Python basics to deploying ML models in production",
-    technologies: ["Python", "TensorFlow", "PyTorch", "MLOps", "Statistics"],
-    difficulty: "Intermediate",
-    duration: "8-12 months",
-    featured: true
-  },
-  {
-    id: 6,
-    title: "Cybersecurity Specialist",
-    description: "Comprehensive security roadmap covering ethical hacking to defense",
-    technologies: ["Network Security", "Penetration Testing", "OSINT", "Forensics"],
-    difficulty: "Beginner to Advanced",
-    duration: "10-16 months",
-    featured: false
-  }
-];
+type Roadmap = Tables<"roadmaps">;
+
 
 const getDifficultyColor = (difficulty: string) => {
-  if (difficulty.includes("Beginner")) return "bg-accent-green/20 text-accent-green";
-  if (difficulty.includes("Intermediate")) return "bg-primary/20 text-primary";
+  if (difficulty.includes("beginner")) return "bg-accent-green/20 text-accent-green";
+  if (difficulty.includes("intermediate")) return "bg-primary/20 text-primary";
   return "bg-accent-purple/20 text-accent-purple";
 };
 
 export default function Roadmaps() {
+  const [roadmaps, setRoadmaps] = useState<Roadmap[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchRoadmaps() {
+      const { data, error } = await supabase
+        .from("roadmaps")
+        .select("*")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching roadmaps:", error);
+      } else {
+        setRoadmaps(data || []);
+      }
+      setLoading(false);
+    }
+
+    fetchRoadmaps();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background pt-20 pb-12 flex items-center justify-center">
+        <div className="text-center">Loading roadmaps...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,7 +72,7 @@ export default function Roadmaps() {
                       Featured
                     </Badge>
                     <Badge className={getDifficultyColor(roadmap.difficulty)}>
-                      {roadmap.difficulty.split(" ")[0]}
+                      {roadmap.difficulty.charAt(0).toUpperCase() + roadmap.difficulty.slice(1)}
                     </Badge>
                   </div>
                   <CardTitle className="text-lg group-hover:text-primary transition-colors">
@@ -104,18 +83,20 @@ export default function Roadmaps() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="mb-4">
-                    <p className="text-sm text-muted-foreground mb-2">Technologies:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {roadmap.technologies.map((tech, index) => (
-                        <Badge key={index} variant="outline" className="text-xs border-border">
-                          {tech}
-                        </Badge>
-                      ))}
+                  {roadmap.technologies && roadmap.technologies.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-sm text-muted-foreground mb-2">Technologies:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {roadmap.technologies.map((tech, index) => (
+                          <Badge key={index} variant="outline" className="text-xs border-border">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                    <span>Duration: {roadmap.duration}</span>
+                    <span>Duration: {roadmap.duration || 'Self-paced'}</span>
                   </div>
                   <div className="flex gap-2">
                     <Link to={`/roadmaps/${roadmap.id}`}>
@@ -126,9 +107,25 @@ export default function Roadmaps() {
                         View Roadmap
                       </Button>
                     </Link>
-                    <Button variant="outline" size="sm" className="border-primary/20 hover:border-primary">
-                      Download
-                    </Button>
+                    {roadmap.download_url ? (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-primary/20 hover:border-primary"
+                        onClick={() => window.open(roadmap.download_url!, '_blank')}
+                      >
+                        Download
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-primary/20 hover:border-primary opacity-50 cursor-not-allowed"
+                        disabled
+                      >
+                        Download
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -145,7 +142,7 @@ export default function Roadmaps() {
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
                     <Badge className={getDifficultyColor(roadmap.difficulty)}>
-                      {roadmap.difficulty.split(" ")[0]}
+                      {roadmap.difficulty.charAt(0).toUpperCase() + roadmap.difficulty.slice(1)}
                     </Badge>
                   </div>
                   <CardTitle className="text-lg group-hover:text-primary transition-colors">
@@ -156,18 +153,20 @@ export default function Roadmaps() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="mb-4">
-                    <p className="text-sm text-muted-foreground mb-2">Technologies:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {roadmap.technologies.map((tech, index) => (
-                        <Badge key={index} variant="outline" className="text-xs border-border">
-                          {tech}
-                        </Badge>
-                      ))}
+                  {roadmap.technologies && roadmap.technologies.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-sm text-muted-foreground mb-2">Technologies:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {roadmap.technologies.map((tech, index) => (
+                          <Badge key={index} variant="outline" className="text-xs border-border">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                    <span>Duration: {roadmap.duration}</span>
+                    <span>Duration: {roadmap.duration || 'Self-paced'}</span>
                   </div>
                   <div className="flex gap-2">
                     <Link to={`/roadmaps/${roadmap.id}`}>
@@ -178,9 +177,25 @@ export default function Roadmaps() {
                         View Roadmap
                       </Button>
                     </Link>
-                    <Button variant="outline" size="sm" className="border-primary/20 hover:border-primary">
-                      Download
-                    </Button>
+                    {roadmap.download_url ? (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-primary/20 hover:border-primary"
+                        onClick={() => window.open(roadmap.download_url!, '_blank')}
+                      >
+                        Download
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-primary/20 hover:border-primary opacity-50 cursor-not-allowed"
+                        disabled
+                      >
+                        Download
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>

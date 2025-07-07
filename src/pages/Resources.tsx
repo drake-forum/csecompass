@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { Tables } from "@/integrations/supabase/types";
+
+type Resource = Tables<"resources">;
 
 const categories = [
   "All",
@@ -18,66 +22,31 @@ const categories = [
   "Blockchain"
 ];
 
-const resources = [
-  {
-    id: 1,
-    title: "Data Structures & Algorithms Roadmap",
-    description: "Complete roadmap for mastering DSA with curated resources and practice problems.",
-    category: "DSA",
-    type: "Roadmap",
-    resources: ["LeetCode", "GeeksforGeeks", "Striver SDE Sheet"],
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Full Stack Web Development",
-    description: "Learn React, Node.js, MongoDB and build real-world projects.",
-    category: "Web Dev",
-    type: "Course",
-    resources: ["FreeCodeCamp", "The Odin Project", "MDN Docs"],
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Machine Learning Fundamentals",
-    description: "Start your AI/ML journey with Python, scikit-learn, and TensorFlow.",
-    category: "AI/ML",
-    type: "Course",
-    resources: ["Coursera", "Kaggle Learn", "Fast.ai"],
-    featured: false
-  },
-  {
-    id: 4,
-    title: "Cybersecurity Essentials",
-    description: "Learn ethical hacking, network security, and penetration testing.",
-    category: "Cyber Security",
-    type: "Roadmap",
-    resources: ["TryHackMe", "HackTheBox", "OWASP"],
-    featured: false
-  },
-  {
-    id: 5,
-    title: "React Native Mobile Development",
-    description: "Build cross-platform mobile apps using React Native and Expo.",
-    category: "App Dev",
-    type: "Tutorial",
-    resources: ["React Native Docs", "Expo", "YouTube"],
-    featured: false
-  },
-  {
-    id: 6,
-    title: "AWS Cloud Computing",
-    description: "Master cloud services with AWS fundamentals and hands-on projects.",
-    category: "Cloud & DevOps",
-    type: "Course",
-    resources: ["AWS Training", "Cloud Guru", "YouTube"],
-    featured: true
-  }
-];
 
 export default function Resources() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchResources() {
+      const { data, error } = await supabase
+        .from("resources")
+        .select("*")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching resources:", error);
+      } else {
+        setResources(data || []);
+      }
+      setLoading(false);
+    }
+
+    fetchResources();
+  }, []);
 
   const filteredResources = resources.filter(resource => {
     const matchesCategory = selectedCategory === "All" || resource.category === selectedCategory;
@@ -85,6 +54,14 @@ export default function Resources() {
                          resource.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background pt-20 pb-12 flex items-center justify-center">
+        <div className="text-center">Loading resources...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pt-20 pb-12">
@@ -146,6 +123,11 @@ export default function Resources() {
                   >
                     {resource.type}
                   </Badge>
+                  {resource.difficulty && (
+                    <Badge variant="outline" className="border-border">
+                      {resource.difficulty}
+                    </Badge>
+                  )}
                   {resource.featured && (
                     <Badge className="bg-accent-green/20 text-accent-green">
                       Featured
@@ -160,16 +142,30 @@ export default function Resources() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="mb-4">
-                  <p className="text-sm text-muted-foreground mb-2">Resources include:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {resource.resources.map((res, index) => (
-                      <Badge key={index} variant="outline" className="text-xs border-border">
-                        {res}
-                      </Badge>
-                    ))}
+                {resource.resources && resource.resources.length > 0 && (
+                  <div className="mb-4">
+                    <p className="text-sm text-muted-foreground mb-2">Resources include:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {resource.resources.map((res, index) => (
+                        <Badge key={index} variant="outline" className="text-xs border-border">
+                          {res}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
+                {resource.tags && resource.tags.length > 0 && (
+                  <div className="mb-4">
+                    <p className="text-sm text-muted-foreground mb-2">Tags:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {resource.tags.map((tag, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs bg-accent-purple/20 text-accent-purple">
+                          #{tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <Link to={`/resources/${resource.id}`}>
                   <Button 
                     className="w-full bg-gradient-to-r from-primary to-accent-purple hover:from-primary/80 hover:to-accent-purple/80"
