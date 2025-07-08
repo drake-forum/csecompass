@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      article_links: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          featured: boolean | null
+          id: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           category: string

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { PrivacyPolicyDialog } from "./PrivacyPolicyDialog";
+import { TermsDialog } from "./TermsDialog";
 
 const footerLinks = {
   "Quick Links": [
@@ -83,16 +85,40 @@ export function Footer() {
           <div>
             <h3 className="font-medium text-foreground mb-3 text-sm">Company</h3>
             <ul className="space-y-2">
-              {footerLinks["Company"].map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.href}
-                    className="text-muted-foreground hover:text-primary transition-colors text-xs"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks["Company"].map((link) => {
+                if (link.label === "Privacy Policy") {
+                  return (
+                    <li key={link.label}>
+                      <PrivacyPolicyDialog>
+                        <button className="text-muted-foreground hover:text-primary transition-colors text-xs text-left">
+                          {link.label}
+                        </button>
+                      </PrivacyPolicyDialog>
+                    </li>
+                  );
+                }
+                if (link.label === "Terms of Service") {
+                  return (
+                    <li key={link.label}>
+                      <TermsDialog>
+                        <button className="text-muted-foreground hover:text-primary transition-colors text-xs text-left">
+                          {link.label}
+                        </button>
+                      </TermsDialog>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
+                      className="text-muted-foreground hover:text-primary transition-colors text-xs"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
