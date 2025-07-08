@@ -10,7 +10,7 @@ const teamMembers = [
   },
   {
     name: "Bear", 
-    role: "Just Bear,
+    role: "Just Bear",
     bio: "Bearing the role to code a lifeless game",
     expertise: ["Yapping", "Gosips", "Trying"],
     avatar: "B"
