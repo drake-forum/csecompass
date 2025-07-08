@@ -2,18 +2,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 const teamMembers = [
   {
-    name: "Alex Chen",
+    name: "Drake Forum",
     role: "Full Stack Developer",
     bio: "Passionate about creating educational platforms that empower the next generation of developers.",
     expertise: ["React", "Node.js", "UI/UX", "Education Technology"],
-    avatar: "AC"
+    avatar: "DF"
   },
   {
-    name: "Sarah Johnson", 
-    role: "Content Curator",
-    bio: "Former tech recruiter turned educator, specializing in curating the best learning resources.",
-    expertise: ["Technical Writing", "Career Guidance", "Resource Curation", "Mentorship"],
-    avatar: "SJ"
+    name: "Bear", 
+    role: "Just Bear,
+    bio: "Bearing the role to code a lifeless game",
+    expertise: ["Yapping", "Gosips", "Trying"],
+    avatar: "B"
   },
   {
     name: "Dev Kumar",
