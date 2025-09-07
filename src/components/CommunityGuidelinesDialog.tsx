@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 interface CommunityGuidelinesDialogProps {
   children: React.ReactNode;
 }
-
+ 
 export function CommunityGuidelinesDialog({ children }: CommunityGuidelinesDialogProps) {
   return (
     <Dialog>
